@@ -512,7 +512,7 @@ async function loadSinglePage() {
             class="single-s-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 ${
               s.season_number === selectedSeason
                 ? "bg-primary text-white shadow-md"
-                : "bg-[#211f30] text-foreground-muted hover:text-white hover:bg-[#2b283d]"
+                : "bg-[#141418] text-gray-400 hover:text-white hover:bg-[#1f1f26] border border-white/5"
             }"
           >
             ${s.name || `Season ${s.season_number}`}
@@ -547,9 +547,9 @@ async function loadSinglePage() {
               return `
                 <a
                   href="watch.html?id=${id}&type=tv&s=${sNum}&e=${ep.episode_number}"
-                  class="group relative flex flex-col gap-2 rounded-xl bg-[#1e1c2b] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-transparent shadow-md"
+                  class="group relative flex flex-col gap-2 rounded-xl bg-[#111115] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-white/10 shadow-md"
                 >
-                  <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black/40">
+                  <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
                     <img src="${thumb}" alt="${ep.name}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
                     <span class="absolute top-2 left-2 rounded-md bg-black/80 px-2 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
                       EP ${ep.episode_number}
@@ -731,7 +731,7 @@ async function loadWatchPage() {
             class="season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 ${
               s.season_number === currentSeason
                 ? "bg-primary text-white shadow-md"
-                : "bg-[#211f30] text-foreground-muted hover:text-white hover:bg-[#2b283d]"
+                : "bg-[#141418] text-gray-400 hover:text-white hover:bg-[#1f1f26] border border-white/5"
             }"
           >
             ${s.name || `Season ${s.season_number}`}
@@ -763,7 +763,7 @@ async function loadWatchPage() {
                 "season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 bg-primary text-white shadow-md";
             } else {
               btn.className =
-                "season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 bg-[#211f30] text-foreground-muted hover:text-white hover:bg-[#2b283d]";
+                "season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 bg-[#141418] text-gray-400 hover:text-white hover:bg-[#1f1f26] border border-white/5";
             }
           });
 
@@ -811,13 +811,13 @@ async function loadWatchPage() {
             return `
             <div
               data-ep="${ep.episode_number}"
-              class="episode-card group relative flex flex-col gap-2 rounded-xl bg-[#1e1c2b] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-transparent shadow-md cursor-pointer ${
+              class="episode-card group relative flex flex-col gap-2 rounded-xl bg-[#111115] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-white/10 shadow-md cursor-pointer ${
                 isActive
-                  ? "!border-primary ring-2 ring-primary/40 bg-[#252236]"
+                  ? "!border-primary ring-2 ring-primary/40 bg-[#191114]"
                   : ""
               }"
             >
-              <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black/40">
+              <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
                 <img src="${thumb}" alt="${ep.name}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
                 <span class="absolute top-2 left-2 rounded-md bg-black/80 px-2 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
                   EP ${ep.episode_number}
