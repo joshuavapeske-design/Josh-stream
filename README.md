@@ -1,8 +1,8 @@
-# PopStream
+# LUPERTA
 
 A modern and responsive Movie/TV show streaming platform template built with `TypeScript` and `TailwindCSS`. Features a beautiful UI with dynamic content sliders, theme switching, RTL support and mobile responsiveness.
 
-![PopStream Demo](screenshots/hero.png)
+![LUPERTA Demo](screenshots/hero.png)
 [View More Screenshots](#screenshots)
 
 ## Features
@@ -56,8 +56,8 @@ src/
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/popstream-theme.git
-cd popstream-theme
+git clone https://github.com/yourusername/luperta-theme.git
+cd luperta-theme
 ```
 
 2. Install dependencies:

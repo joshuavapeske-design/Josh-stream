@@ -196,7 +196,7 @@ function createHeroSlideHTML(item: TMDBItem): string {
   const title = getDisplayTitle(item);
   const year = getReleaseYear(item);
   const fullTitle = year ? `${title} (${year})` : title;
-  const overview = item.overview || "Stream now in HD on PopStream.";
+  const overview = item.overview || "Stream now in HD on LUPERTA.";
   const backdrop = getBackdropUrl(item.backdrop_path, "w1280");
   const poster = getImageUrl(item.poster_path, "w500");
   const type = item.media_type || (item.first_air_date ? "tv" : "movie");
@@ -426,7 +426,7 @@ async function loadSinglePage() {
     const year = getReleaseYear(item);
     const fullTitle = year ? `${title} (${year})` : title;
 
-    document.title = `${fullTitle} - PopStream`;
+    document.title = `${fullTitle} - LUPERTA`;
 
     // Title
     const titleEl = document.querySelector("#detail-title");
@@ -666,7 +666,7 @@ async function loadWatchPage() {
   try {
     currentItem = await getDetails(id, type);
     const title = getDisplayTitle(currentItem);
-    document.title = `Watch ${title} - PopStream`;
+    document.title = `Watch ${title} - LUPERTA`;
 
     // Build player server buttons
     const playersContainer = document.querySelector<HTMLElement>(".players");
