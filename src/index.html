@@ -126,13 +126,13 @@
             class="desktop hidden flex-row items-center gap-8 text-[14.75px] font-medium capitalize md:flex"
           >
             <li>
-              <a href="/" class="nav-link active">Home</a>
+              <a href="index.html" class="nav-link active">Home</a>
             </li>
             <li>
-              <a href="/browse.html" class="nav-link">Movies</a>
+              <a href="browse.html?type=movie" class="nav-link">Movies</a>
             </li>
             <li>
-              <a href="/browse.html" class="nav-link">TV Shows</a>
+              <a href="browse.html?type=tv" class="nav-link">TV Shows</a>
             </li>
             <li>
               <form action="/search" class="w-full">
@@ -377,7 +377,7 @@
       >
         <div class="swiper-pagination hidden lg:block"></div>
 
-        <div class="swiper-wrapper">
+        <div class="swiper-wrapper" id="hero-swiper-wrapper">
           <div
             class="swiper-slide lazy-bg !size-full w-[1041px] bg-cover bg-[position:center_center] will-change-transform motion-reduce:transform-none"
             data-bg="/images/3-wide.webp"
@@ -702,7 +702,7 @@
           </div>
           <div class="h-[309px] sm:h-[312px]">
             <div class="swiper">
-              <div class="swiper-wrapper">
+              <div class="swiper-wrapper" id="latest-releases-wrapper">
                 <div
                   class="swiper-slide xs:gap-[14px] mt-1 !flex max-w-[170px] flex-col gap-2 rounded-lg"
                 >
@@ -1178,7 +1178,7 @@
           </div>
           <div class="h-[309px] sm:h-[312px]">
             <div class="swiper">
-              <div class="swiper-wrapper">
+              <div class="swiper-wrapper" id="most-watched-wrapper">
                 <div
                   class="swiper-slide xs:gap-[14px] mt-1 !flex max-w-[170px] flex-col gap-2 rounded-lg"
                 >
@@ -1531,7 +1531,7 @@
           </div>
           <div class="h-[309px] sm:h-[312px]">
             <div class="swiper">
-              <div class="swiper-wrapper">
+              <div class="swiper-wrapper" id="top-rated-wrapper">
                 <div
                   class="swiper-slide xs:gap-[14px] mt-1 !flex max-w-[170px] flex-col gap-2 rounded-lg"
                 >
