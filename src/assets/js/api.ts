@@ -23,6 +23,13 @@ export interface TMDBItem {
   runtime?: number;
   number_of_seasons?: number;
   number_of_episodes?: number;
+  seasons?: Array<{
+    id: number;
+    name: string;
+    season_number: number;
+    episode_count: number;
+    poster_path: string | null;
+  }>;
   tagline?: string;
   credits?: {
     cast: Array<{ id: number; name: string; character: string; profile_path: string | null }>;
@@ -31,6 +38,27 @@ export interface TMDBItem {
   videos?: {
     results: Array<{ key: string; site: string; type: string; name: string }>;
   };
+}
+
+export interface TMDBEpisode {
+  id: number;
+  episode_number: number;
+  season_number: number;
+  name: string;
+  overview: string;
+  still_path: string | null;
+  air_date?: string;
+  vote_average?: number;
+  runtime?: number;
+}
+
+export interface TMDBSeasonDetails {
+  _id?: string;
+  id?: number;
+  name: string;
+  season_number: number;
+  overview?: string;
+  episodes: TMDBEpisode[];
 }
 
 export function getImageUrl(path: string | null | undefined, size = "w500"): string {
@@ -101,6 +129,10 @@ export async function getDetails(id: number | string, type: "movie" | "tv" = "mo
   return fetchFromTMDB<TMDBItem>(`/${type}/${id}`, {
     append_to_response: "credits,videos,recommendations"
   });
+}
+
+export async function getTvSeason(tvId: number | string, seasonNumber: number): Promise<TMDBSeasonDetails> {
+  return fetchFromTMDB<TMDBSeasonDetails>(`/tv/${tvId}/season/${seasonNumber}`);
 }
 
 export function getStreamSources(id: number | string, type: "movie" | "tv" = "movie", season = 1, episode = 1) {

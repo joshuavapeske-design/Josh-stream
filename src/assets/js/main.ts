@@ -7,13 +7,14 @@ import {
   getTopRated,
   searchMulti,
   getDetails,
+  getTvSeason,
   getImageUrl,
   getBackdropUrl,
   getDisplayTitle,
   getReleaseYear,
   getStreamSources,
 } from "./api";
-import type { TMDBItem } from "./api";
+import type { TMDBItem, TMDBEpisode } from "./api";
 
 let heroSwiperInstance: Swiper | null = null;
 let categorySwiperInstances: Swiper[] = [];
@@ -112,13 +113,14 @@ function initPageRouter() {
     path.endsWith("single.html") ||
     path.endsWith("/single") ||
     document.querySelector("#detail-title") ||
-    new URLSearchParams(window.location.search).has("id") && path.includes("single")
+    (new URLSearchParams(window.location.search).has("id") && path.includes("single"))
   ) {
     loadSinglePage();
   } else if (
     path.endsWith("watch.html") ||
     path.endsWith("/watch") ||
-    document.querySelector("#player-container")
+    document.querySelector("#player-container") ||
+    document.querySelector("#series-episodes-section")
   ) {
     loadWatchPage();
   } else if (
@@ -197,7 +199,7 @@ function createHeroSlideHTML(item: TMDBItem): string {
   const overview = item.overview || "Stream now in HD on PopStream.";
   const backdrop = getBackdropUrl(item.backdrop_path, "w1280");
   const poster = getImageUrl(item.poster_path, "w500");
-  const type = item.media_type || "movie";
+  const type = item.media_type || (item.first_air_date ? "tv" : "movie");
 
   return `
     <div
@@ -410,7 +412,7 @@ async function loadBrowsePage() {
   }
 }
 
-// ---------------- SINGLE MOVIE DETAILS LOGIC ----------------
+// ---------------- SINGLE MOVIE/TV DETAILS LOGIC ----------------
 async function loadSinglePage() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
@@ -471,13 +473,13 @@ async function loadSinglePage() {
       descP.textContent = item.overview;
     }
 
-    // Watch Now link
+    // Watch Now button link
     const watchNowBtn = document.querySelector<HTMLAnchorElement>('a[name="watch-now"]');
     if (watchNowBtn) {
-      watchNowBtn.href = `watch.html?id=${id}&type=${type}`;
+      watchNowBtn.href = `watch.html?id=${id}&type=${type}&s=1&e=1`;
     }
 
-    // Trailer
+    // Trailer embed
     const videos = item.videos?.results || [];
     const trailer =
       videos.find((v) => v.site === "YouTube" && v.type === "Trailer") ||
@@ -486,6 +488,100 @@ async function loadSinglePage() {
     const trailerIframe = document.querySelector<HTMLIFrameElement>("#trailer iframe");
     if (trailerIframe && trailer) {
       trailerIframe.src = `https://www.youtube.com/embed/${trailer.key}?autoplay=0`;
+    }
+
+    // Series Seasons & Episodes Section on single.html
+    const singleSeriesSection = document.querySelector<HTMLElement>("#single-series-episodes");
+    const singleSeasonSelector = document.querySelector<HTMLElement>("#single-season-selector");
+    const singleEpisodesContainer = document.querySelector<HTMLElement>("#single-episodes-container");
+    const singleSeasonLabel = document.querySelector<HTMLElement>("#single-season-label");
+
+    if (type === "tv" && singleSeriesSection && item.seasons) {
+      singleSeriesSection.classList.remove("hidden");
+      const validSeasons = item.seasons.filter((s) => s.season_number > 0);
+      let selectedSeason = 1;
+
+      function renderSingleSeasonButtons() {
+        if (!singleSeasonSelector) return;
+        singleSeasonSelector.innerHTML = validSeasons
+          .map(
+            (s) => `
+          <button
+            type="button"
+            data-season="${s.season_number}"
+            class="single-s-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 ${
+              s.season_number === selectedSeason
+                ? "bg-primary text-white shadow-md"
+                : "bg-[#211f30] text-foreground-muted hover:text-white hover:bg-[#2b283d]"
+            }"
+          >
+            ${s.name || `Season ${s.season_number}`}
+          </button>
+        `
+          )
+          .join("");
+
+        singleSeasonSelector
+          .querySelectorAll<HTMLButtonElement>(".single-s-btn")
+          .forEach((btn) => {
+            btn.addEventListener("click", () => {
+              selectedSeason = parseInt(btn.dataset.season || "1", 10);
+              renderSingleSeasonButtons();
+              loadSingleSeasonEpisodes(selectedSeason);
+            });
+          });
+      }
+
+      async function loadSingleSeasonEpisodes(sNum: number) {
+        if (singleSeasonLabel) singleSeasonLabel.textContent = `Season ${sNum}`;
+        if (!singleEpisodesContainer) return;
+        singleEpisodesContainer.innerHTML = `<div class="col-span-full py-8 text-center text-sm text-foreground-muted">Loading Season ${sNum} episodes...</div>`;
+
+        try {
+          const sData = await getTvSeason(id!, sNum);
+          singleEpisodesContainer.innerHTML = (sData.episodes || [])
+            .map((ep) => {
+              const thumb = ep.still_path
+                ? getImageUrl(ep.still_path, "w500")
+                : getBackdropUrl(item.backdrop_path, "w500");
+              return `
+                <a
+                  href="watch.html?id=${id}&type=tv&s=${sNum}&e=${ep.episode_number}"
+                  class="group relative flex flex-col gap-2 rounded-xl bg-[#1e1c2b] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-transparent shadow-md"
+                >
+                  <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black/40">
+                    <img src="${thumb}" alt="${ep.name}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+                    <span class="absolute top-2 left-2 rounded-md bg-black/80 px-2 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
+                      EP ${ep.episode_number}
+                    </span>
+                    ${
+                      ep.runtime
+                        ? `<span class="absolute bottom-2 left-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] text-gray-300">${ep.runtime}m</span>`
+                        : ""
+                    }
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span class="rounded-full bg-primary p-2 text-white shadow-lg">▶ Play</span>
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-0.5 px-1">
+                    <h4 class="text-xs sm:text-sm font-semibold text-white line-clamp-1 group-hover:text-primary transition-colors">
+                      ${ep.episode_number}. ${ep.name}
+                    </h4>
+                    <p class="text-[11px] text-foreground-muted line-clamp-2 leading-relaxed">
+                      ${ep.overview || "No description available."}
+                    </p>
+                  </div>
+                </a>
+              `;
+            })
+            .join("");
+        } catch (err) {
+          console.error("Error loading single season episodes:", err);
+        }
+      }
+
+      renderSingleSeasonButtons();
+      loadSingleSeasonEpisodes(1);
     }
 
     loadImages();
@@ -497,35 +593,50 @@ async function loadSinglePage() {
 // ---------------- WATCH STREAMING PLAYER LOGIC ----------------
 async function loadWatchPage() {
   const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get("id") || "550"; // default Fight Club or first movie if none
-  const type = (urlParams.get("type") as "movie" | "tv") || "movie";
-  const season = parseInt(urlParams.get("s") || "1", 10);
-  const episode = parseInt(urlParams.get("e") || "1", 10);
+  const id = urlParams.get("id") || "95396"; // default Severance or fight club
+  const type = (urlParams.get("type") as "movie" | "tv") || "tv";
+  let currentSeason = parseInt(urlParams.get("s") || "1", 10);
+  let currentEpisode = parseInt(urlParams.get("e") || "1", 10);
+  let currentServerIndex = 0;
 
-  const sources = getStreamSources(id, type, season, episode);
-
-  // Player container
   const playerContainer =
     document.querySelector<HTMLElement>("#player-container") ||
     document.querySelector<HTMLElement>("main section .aspect-video");
 
   const titleHeading = document.querySelector<HTMLElement>("main section h1");
 
-  try {
-    const item = await getDetails(id, type);
-    const title = getDisplayTitle(item);
-    if (titleHeading) {
-      titleHeading.textContent = `Watch ${title} ${type === "tv" ? `Season ${season} Ep ${episode}` : ""}`;
+  // Series UI elements
+  const seriesSection = document.querySelector<HTMLElement>("#series-episodes-section");
+  const seasonSelector = document.querySelector<HTMLElement>("#season-selector-container");
+  const episodesContainer = document.querySelector<HTMLElement>("#episodes-container");
+  const seasonLabel = document.querySelector<HTMLElement>("#current-season-label");
+  const episodeCountLabel = document.querySelector<HTMLElement>("#current-episode-count");
+  const epNavControls = document.querySelector<HTMLElement>("#episode-nav-controls");
+  const currentEpPill = document.querySelector<HTMLElement>("#current-ep-pill");
+  const prevEpBtn = document.querySelector<HTMLButtonElement>("#prev-ep-btn");
+  const nextEpBtn = document.querySelector<HTMLButtonElement>("#next-ep-btn");
+
+  let currentItem: TMDBItem | null = null;
+  let currentEpisodesList: TMDBEpisode[] = [];
+
+  function updateHeading() {
+    if (!titleHeading || !currentItem) return;
+    const title = getDisplayTitle(currentItem);
+    if (type === "tv") {
+      const curEpObj = currentEpisodesList.find(
+        (e) => e.episode_number === currentEpisode
+      );
+      const epName = curEpObj ? `: ${curEpObj.name}` : "";
+      titleHeading.textContent = `Watch ${title} - Season ${currentSeason}, Ep ${currentEpisode}${epName}`;
+    } else {
+      titleHeading.textContent = `Watch ${title}`;
     }
-    document.title = `Watch ${title} - PopStream`;
-  } catch (err) {
-    console.warn("Watch page details notice:", err);
   }
 
-  // Render iframe player
-  function setPlayerServer(serverIndex: number) {
+  function setPlayer() {
     if (!playerContainer) return;
-    const selected = sources[serverIndex] || sources[0];
+    const sources = getStreamSources(id, type, currentSeason, currentEpisode);
+    const selected = sources[currentServerIndex] || sources[0];
 
     playerContainer.innerHTML = `
       <iframe
@@ -539,41 +650,266 @@ async function loadWatchPage() {
 
     // Highlight active player button
     document.querySelectorAll(".players a").forEach((btn, idx) => {
-      if (idx === serverIndex) {
+      if (idx === currentServerIndex) {
         btn.classList.add("border-primary", "bg-primary", "text-white");
       } else {
         btn.classList.remove("border-primary", "bg-primary", "text-white");
       }
     });
+
+    if (currentEpPill) {
+      currentEpPill.textContent = `S${currentSeason} : E${currentEpisode}`;
+    }
+    updateHeading();
   }
 
-  // Build player buttons
-  const playersContainer = document.querySelector<HTMLElement>(".players");
-  if (playersContainer) {
-    playersContainer.innerHTML = sources
-      .map(
-        (src, idx) => `
-        <a
-          href="javascript:void(0)"
-          data-server="${idx}"
-          class="hover:border-primary hover:bg-primary flex cursor-pointer items-center justify-center gap-1 rounded-full border px-[10px] py-[2.75px] hover:text-white sm:px-3 sm:py-1 ${idx === 0 ? "border-primary bg-primary text-white" : ""}"
-        >
-          <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="6 3 20 12 6 21 6 3"></polygon>
-          </svg>
-          ${src.name}
-        </a>
-      `
-      )
-      .join("");
+  try {
+    currentItem = await getDetails(id, type);
+    const title = getDisplayTitle(currentItem);
+    document.title = `Watch ${title} - PopStream`;
 
-    playersContainer.querySelectorAll("a").forEach((btn, idx) => {
-      btn.addEventListener("click", () => setPlayerServer(idx));
-    });
+    // Build player server buttons
+    const playersContainer = document.querySelector<HTMLElement>(".players");
+    if (playersContainer) {
+      const sources = getStreamSources(id, type, currentSeason, currentEpisode);
+      playersContainer.innerHTML = sources
+        .map(
+          (src, idx) => `
+          <a
+            href="javascript:void(0)"
+            data-server="${idx}"
+            class="hover:border-primary hover:bg-primary flex cursor-pointer items-center justify-center gap-1 rounded-full border px-[10px] py-[2.75px] hover:text-white sm:px-3 sm:py-1 ${
+              idx === 0 ? "border-primary bg-primary text-white" : ""
+            }"
+          >
+            <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="6 3 20 12 6 21 6 3"></polygon>
+            </svg>
+            ${src.name}
+          </a>
+        `
+        )
+        .join("");
+
+      playersContainer.querySelectorAll("a").forEach((btn, idx) => {
+        btn.addEventListener("click", () => {
+          currentServerIndex = idx;
+          setPlayer();
+        });
+      });
+    }
+
+    // Series specific logic:
+    if (type === "tv") {
+      if (seriesSection) seriesSection.classList.remove("hidden");
+      if (epNavControls) epNavControls.classList.remove("hidden");
+
+      const validSeasons = (currentItem.seasons || []).filter(
+        (s) => s.season_number > 0
+      );
+      const totalSeasons =
+        validSeasons.length > 0
+          ? validSeasons
+          : [
+              {
+                season_number: 1,
+                name: "Season 1",
+                episode_count: 10,
+                id: 1,
+                poster_path: null,
+              },
+            ];
+
+      // Render season buttons
+      if (seasonSelector) {
+        seasonSelector.innerHTML = totalSeasons
+          .map(
+            (s) => `
+          <button
+            type="button"
+            data-season="${s.season_number}"
+            class="season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 ${
+              s.season_number === currentSeason
+                ? "bg-primary text-white shadow-md"
+                : "bg-[#211f30] text-foreground-muted hover:text-white hover:bg-[#2b283d]"
+            }"
+          >
+            ${s.name || `Season ${s.season_number}`}
+          </button>
+        `
+          )
+          .join("");
+
+        seasonSelector
+          .querySelectorAll<HTMLButtonElement>(".season-btn")
+          .forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const sn = parseInt(btn.dataset.season || "1", 10);
+              switchSeason(sn, 1);
+            });
+          });
+      }
+
+      async function switchSeason(seasonNum: number, targetEp = 1) {
+        currentSeason = seasonNum;
+        if (seasonLabel) seasonLabel.textContent = `Season ${currentSeason}`;
+
+        // Highlight active season button
+        seasonSelector
+          ?.querySelectorAll<HTMLButtonElement>(".season-btn")
+          .forEach((btn) => {
+            if (parseInt(btn.dataset.season || "0", 10) === currentSeason) {
+              btn.className =
+                "season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 bg-primary text-white shadow-md";
+            } else {
+              btn.className =
+                "season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 bg-[#211f30] text-foreground-muted hover:text-white hover:bg-[#2b283d]";
+            }
+          });
+
+        if (episodesContainer) {
+          episodesContainer.innerHTML = `
+            <div class="col-span-full py-8 text-center text-sm text-foreground-muted">
+              Loading Season ${currentSeason} episodes...
+            </div>
+          `;
+        }
+
+        try {
+          const seasonData = await getTvSeason(id, currentSeason);
+          currentEpisodesList = seasonData.episodes || [];
+          if (episodeCountLabel) {
+            episodeCountLabel.textContent = `${currentEpisodesList.length} Episodes`;
+          }
+          renderEpisodesList();
+          if (targetEp) {
+            selectEpisode(targetEp, false);
+          }
+        } catch (err) {
+          console.error("Error fetching season episodes:", err);
+          if (episodesContainer) {
+            episodesContainer.innerHTML = `
+              <div class="col-span-full py-8 text-center text-sm text-foreground-muted">
+                Unable to load episodes for Season ${currentSeason}.
+              </div>
+            `;
+          }
+        }
+      }
+
+      function renderEpisodesList() {
+        if (!episodesContainer) return;
+        episodesContainer.innerHTML = currentEpisodesList
+          .map((ep) => {
+            const isActive =
+              ep.episode_number === currentEpisode &&
+              ep.season_number === currentSeason;
+            const thumb = ep.still_path
+              ? getImageUrl(ep.still_path, "w500")
+              : getBackdropUrl(currentItem?.backdrop_path, "w500");
+
+            return `
+            <div
+              data-ep="${ep.episode_number}"
+              class="episode-card group relative flex flex-col gap-2 rounded-xl bg-[#1e1c2b] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-transparent shadow-md cursor-pointer ${
+                isActive
+                  ? "!border-primary ring-2 ring-primary/40 bg-[#252236]"
+                  : ""
+              }"
+            >
+              <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black/40">
+                <img src="${thumb}" alt="${ep.name}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+                <span class="absolute top-2 left-2 rounded-md bg-black/80 px-2 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
+                  EP ${ep.episode_number}
+                </span>
+                ${
+                  isActive
+                    ? '<span class="absolute bottom-2 right-2 flex items-center gap-1 rounded-md bg-primary px-2 py-0.5 text-[11px] font-bold text-white shadow-lg animate-pulse">▶ Playing</span>'
+                    : ""
+                }
+                ${
+                  ep.runtime
+                    ? `<span class="absolute bottom-2 left-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] text-gray-300">${ep.runtime}m</span>`
+                    : ""
+                }
+              </div>
+              <div class="flex flex-col gap-0.5 px-1">
+                <h4 class="text-xs sm:text-sm font-semibold text-white line-clamp-1 group-hover:text-primary transition-colors">
+                  ${ep.episode_number}. ${ep.name}
+                </h4>
+                <p class="text-[11px] text-foreground-muted line-clamp-2 leading-relaxed">
+                  ${ep.overview || "No description available."}
+                </p>
+              </div>
+            </div>
+          `;
+          })
+          .join("");
+
+        episodesContainer
+          .querySelectorAll(".episode-card")
+          .forEach((card) => {
+            card.addEventListener("click", () => {
+              const epNum = parseInt(
+                (card as HTMLElement).dataset.ep || "1",
+                10
+              );
+              selectEpisode(epNum, true);
+            });
+          });
+      }
+
+      function selectEpisode(epNum: number, scrollToPlayer = true) {
+        currentEpisode = epNum;
+        setPlayer();
+        renderEpisodesList();
+
+        const newUrl = `watch.html?id=${id}&type=tv&s=${currentSeason}&e=${currentEpisode}`;
+        window.history.replaceState(null, "", newUrl);
+
+        if (scrollToPlayer && playerContainer) {
+          playerContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }
+
+      // Next / Prev episode buttons
+      prevEpBtn?.addEventListener("click", () => {
+        if (currentEpisode > 1) {
+          selectEpisode(currentEpisode - 1, true);
+        } else if (currentSeason > 1) {
+          switchSeason(currentSeason - 1, 1);
+        }
+      });
+
+      nextEpBtn?.addEventListener("click", () => {
+        const maxEp = currentEpisodesList.length;
+        if (currentEpisode < maxEp) {
+          selectEpisode(currentEpisode + 1, true);
+        } else {
+          const nextSeasonObj = totalSeasons.find(
+            (s) => s.season_number === currentSeason + 1
+          );
+          if (nextSeasonObj) {
+            switchSeason(currentSeason + 1, 1);
+          }
+        }
+      });
+
+      // Initially load the selected season
+      await switchSeason(currentSeason, currentEpisode);
+    } else {
+      // Movie mode
+      if (seriesSection) seriesSection.classList.add("hidden");
+      if (epNavControls) epNavControls.classList.add("hidden");
+      setPlayer();
+    }
+  } catch (err) {
+    console.warn("Watch page load error:", err);
+    setPlayer();
   }
-
-  // Load first server initially
-  setPlayerServer(0);
 }
 
 // ---------------- SHARED UTILITIES ----------------
@@ -622,7 +958,8 @@ function handleHeaderBackgroundChange() {
 }
 
 function loadImages() {
-  const imgs: NodeListOf<HTMLImageElement> = document.querySelectorAll("img.lazy-fade");
+  const imgs: NodeListOf<HTMLImageElement> =
+    document.querySelectorAll("img.lazy-fade");
 
   imgs.forEach((img) => {
     if (img.complete) {
@@ -635,7 +972,8 @@ function loadImages() {
 }
 
 function loadBackgroundImages() {
-  const blocks: NodeListOf<HTMLElement> = document.querySelectorAll(".lazy-bg[data-bg]");
+  const blocks: NodeListOf<HTMLElement> =
+    document.querySelectorAll(".lazy-bg[data-bg]");
 
   blocks.forEach((block) => {
     const url = block.dataset.bg;

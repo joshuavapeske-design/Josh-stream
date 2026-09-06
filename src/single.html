@@ -670,6 +670,26 @@
         </div>
       </section>
 
+      <!-- Series Seasons & Episodes Section -->
+      <section id="single-series-episodes" class="xs:py-6 mx-auto max-w-[1140px] px-4 py-6 sm:px-6 md:px-8 xl:px-0 hidden">
+        <div class="flex flex-col gap-5 rounded-2xl border border-foreground-muted/30 bg-[#16151f] p-4 sm:p-6 shadow-2xl">
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-foreground-muted/20 pb-4">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="text-sm font-bold uppercase tracking-wider text-primary">Seasons</span>
+              <div id="single-season-selector" class="flex flex-wrap gap-2">
+                <!-- Season buttons dynamically loaded here -->
+              </div>
+            </div>
+            <div class="text-xs text-foreground-muted">
+              <span id="single-season-label" class="font-medium text-white">Season 1</span>
+            </div>
+          </div>
+          <div id="single-episodes-container" class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-1">
+            <!-- Episode cards dynamically loaded here -->
+          </div>
+        </div>
+      </section>
+
       <!-- You Might Also Like section -->
       <section
         class="xs:py-[18.75px] mx-auto max-w-[1140px] px-4 py-[16.75px] sm:px-6 sm:py-[20px] md:px-8 xl:px-0"

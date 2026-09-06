@@ -529,6 +529,30 @@
                 </a>
               </div>
 
+              <!-- Quick Episode Navigator for Series -->
+              <div id="episode-nav-controls" class="hidden flex-wrap items-center gap-2 mt-3 sm:mt-0 sm:ml-4">
+                <button
+                  type="button"
+                  id="prev-ep-btn"
+                  class="flex cursor-pointer items-center gap-1 rounded-full border border-foreground-muted/40 px-3 py-1 text-xs hover:border-primary hover:text-primary transition-all duration-200"
+                >
+                  ⏮️ Prev
+                </button>
+                <span
+                  id="current-ep-pill"
+                  class="text-xs font-semibold px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30"
+                >
+                  S1 : E1
+                </span>
+                <button
+                  type="button"
+                  id="next-ep-btn"
+                  class="flex cursor-pointer items-center gap-1 rounded-full border border-foreground-muted/40 px-3 py-1 text-xs hover:border-primary hover:text-primary transition-all duration-200"
+                >
+                  Next ⏭️
+                </button>
+              </div>
+
               <div class="mt-4 sm:mt-0 sm:ml-auto rtl:sm:mr-auto rtl:sm:ml-0">
                 <a
                   href="#"
@@ -582,6 +606,28 @@
             </div>
           </div>
           <hr class="text-foreground-muted my-2" />
+        </div>
+      </section>
+
+      <!-- Series Seasons & Episodes Section -->
+      <section id="series-episodes-section" class="mx-auto mt-6 max-w-5xl px-4 lg:px-0 hidden">
+        <div class="flex flex-col gap-5 rounded-2xl border border-foreground-muted/30 bg-[#16151f] p-4 sm:p-6 shadow-2xl">
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-foreground-muted/20 pb-4">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="text-sm font-bold uppercase tracking-wider text-primary">Seasons</span>
+              <div id="season-selector-container" class="flex flex-wrap gap-2">
+                <!-- Season tabs dynamically inserted here -->
+              </div>
+            </div>
+            <div class="text-xs text-foreground-muted">
+              <span id="current-season-label" class="font-medium text-white">Season 1</span> • <span id="current-episode-count">Episodes</span>
+            </div>
+          </div>
+
+          <!-- Episode Grid -->
+          <div id="episodes-container" class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-1">
+            <!-- Episode cards dynamically inserted here -->
+          </div>
         </div>
       </section>
 
