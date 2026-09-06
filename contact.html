@@ -40,18 +40,14 @@
     <link rel="canonical" href="https://example.com/contact.html" />
 
     <script>
-      // Load default theme from local storage
       (function () {
-        const localTheme = localStorage.getItem("APP_THEME");
-        const isSystemDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
-        const theme = localTheme || (isSystemDark ? "dark" : "light");
-        document.documentElement.classList.add(theme);
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+        localStorage.setItem("APP_THEME", "dark");
       })();
     </script>
-    <script type="module" crossorigin src="./assets/main-CJ9-gg6Z.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/main-QnQRnu1F.css">
+    <script type="module" crossorigin src="./assets/main-BMRBUFtB.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/main-BeDenga-.css">
     <link rel="stylesheet" crossorigin href="./assets/font-en-XEDrDgG6.css">
   </head>
   <body class="bg-background selection:bg-primary/20 text-foreground font-sans">
@@ -271,7 +267,7 @@
                 >
                   <input
                     type="text"
-                    class="dark:text-foreground text-foreground-inverse w-[300px] rounded-full bg-[#302d3a] py-[8px] pr-[36px] pl-[20px] font-medium shadow-md transition-all duration-300 outline-none focus:bg-[#474550] focus:shadow-sm md:w-[340px] rtl:pr-[20px] rtl:pl-[36px] rtl:text-right"
+                    class="dark:text-foreground text-foreground-inverse w-[300px] rounded-full bg-[#141418] border border-white/10 py-[8px] pr-[36px] pl-[20px] font-medium shadow-md transition-all duration-300 outline-none focus:bg-[#1e1e24] focus:border-white/20 focus:shadow-sm md:w-[340px] rtl:pr-[20px] rtl:pl-[36px] rtl:text-right"
                     placeholder="Search"
                     name="search"
                   /><button

@@ -155,16 +155,16 @@
           <button
             type="button"
             data-season="${E.season_number}"
-            class="single-s-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 ${E.season_number===C?"bg-primary text-white shadow-md":"bg-[#211f30] text-foreground-muted hover:text-white hover:bg-[#2b283d]"}"
+            class="single-s-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 ${E.season_number===C?"bg-primary text-white shadow-md":"bg-[#141418] text-gray-400 hover:text-white hover:bg-[#1f1f26] border border-white/5"}"
           >
             ${E.name||`Season ${E.season_number}`}
           </button>
         `).join(""),c.querySelectorAll(".single-s-btn").forEach(E=>{E.addEventListener("click",()=>{C=parseInt(E.dataset.season||"1",10),v(),L(C)})}))};y.classList.remove("hidden");const M=r.seasons.filter(E=>E.season_number>0);let C=1;async function L(E){if(w&&(w.textContent=`Season ${E}`),!!f){f.innerHTML=`<div class="col-span-full py-8 text-center text-sm text-foreground-muted">Loading Season ${E} episodes...</div>`;try{const x=await qe(e,E);f.innerHTML=(x.episodes||[]).map(b=>{const S=b.still_path?W(b.still_path,"w500"):ie(r.backdrop_path,"w500");return`
                 <a
                   href="watch.html?id=${e}&type=tv&s=${E}&e=${b.episode_number}"
-                  class="group relative flex flex-col gap-2 rounded-xl bg-[#1e1c2b] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-transparent shadow-md"
+                  class="group relative flex flex-col gap-2 rounded-xl bg-[#111115] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-white/10 shadow-md"
                 >
-                  <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black/40">
+                  <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
                     <img src="${S}" alt="${b.name}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
                     <span class="absolute top-2 left-2 rounded-md bg-black/80 px-2 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
                       EP ${b.episode_number}
@@ -205,9 +205,9 @@
         `).join(""),M.querySelectorAll("a").forEach((L,E)=>{L.addEventListener("click",()=>{r=E,w()})})}if(s==="tv"){let C=function(){u&&(u.innerHTML=c.map(S=>{const P=S.episode_number===n&&S.season_number===i,O=S.still_path?W(S.still_path,"w500"):ie(y==null?void 0:y.backdrop_path,"w500");return`
             <div
               data-ep="${S.episode_number}"
-              class="episode-card group relative flex flex-col gap-2 rounded-xl bg-[#1e1c2b] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-transparent shadow-md cursor-pointer ${P?"!border-primary ring-2 ring-primary/40 bg-[#252236]":""}"
+              class="episode-card group relative flex flex-col gap-2 rounded-xl bg-[#111115] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border border-white/10 shadow-md cursor-pointer ${P?"!border-primary ring-2 ring-primary/40 bg-[#191114]":""}"
             >
-              <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black/40">
+              <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
                 <img src="${O}" alt="${S.name}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
                 <span class="absolute top-2 left-2 rounded-md bg-black/80 px-2 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
                   EP ${S.episode_number}
@@ -228,11 +228,11 @@
           <button
             type="button"
             data-season="${S.season_number}"
-            class="season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 ${S.season_number===i?"bg-primary text-white shadow-md":"bg-[#211f30] text-foreground-muted hover:text-white hover:bg-[#2b283d]"}"
+            class="season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 ${S.season_number===i?"bg-primary text-white shadow-md":"bg-[#141418] text-gray-400 hover:text-white hover:bg-[#1f1f26] border border-white/5"}"
           >
             ${S.name||`Season ${S.season_number}`}
           </button>
-        `).join(""),l.querySelectorAll(".season-btn").forEach(S=>{S.addEventListener("click",()=>{const P=parseInt(S.dataset.season||"1",10);b(P,1)})}));async function b(S,P=1){i=S,p&&(p.textContent=`Season ${i}`),l==null||l.querySelectorAll(".season-btn").forEach(O=>{parseInt(O.dataset.season||"0",10)===i?O.className="season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 bg-primary text-white shadow-md":O.className="season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 bg-[#211f30] text-foreground-muted hover:text-white hover:bg-[#2b283d]"}),u&&(u.innerHTML=`
+        `).join(""),l.querySelectorAll(".season-btn").forEach(S=>{S.addEventListener("click",()=>{const P=parseInt(S.dataset.season||"1",10);b(P,1)})}));async function b(S,P=1){i=S,p&&(p.textContent=`Season ${i}`),l==null||l.querySelectorAll(".season-btn").forEach(O=>{parseInt(O.dataset.season||"0",10)===i?O.className="season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 bg-primary text-white shadow-md":O.className="season-btn cursor-pointer rounded-full px-3.5 py-1 text-xs font-semibold transition-all duration-200 bg-[#141418] text-gray-400 hover:text-white hover:bg-[#1f1f26] border border-white/5"}),u&&(u.innerHTML=`
             <div class="col-span-full py-8 text-center text-sm text-foreground-muted">
               Loading Season ${i} episodes...
             </div>
