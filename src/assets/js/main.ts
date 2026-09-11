@@ -4,17 +4,20 @@ import {
   getTrending,
   getPopularMovies,
   getPopularTv,
+  getRecentReleases,
   getTopRated,
+  getByGenre,
   searchMulti,
   getDetails,
   getTvSeason,
+  fetchTrailerKey,
   getImageUrl,
   getBackdropUrl,
   getDisplayTitle,
   getReleaseYear,
   getStreamSources,
 } from "./api";
-import type { TMDBItem, TMDBEpisode } from "./api";
+import type { TMDBItem, TMDBEpisode, TMDBGenre } from "./api";
 
 let heroSwiperInstance: Swiper | null = null;
 let categorySwiperInstances: Swiper[] = [];
@@ -65,7 +68,7 @@ function initSwipers() {
     categorySwiperInstances.push(s);
   });
 
-  const heroEl = document.querySelector<HTMLElement>(".hero-swiper");
+  const heroEl = document.querySelector<HTMLElement>("main .hero-swiper, .hero-swiper");
   if (heroEl) {
     if (heroSwiperInstance) heroSwiperInstance.destroy(true, true);
     heroSwiperInstance = new Swiper(heroEl, {
@@ -157,14 +160,25 @@ async function loadHomePage() {
         .join("");
     }
 
-    if (latestWrapper && trending.length > 0) {
-      latestWrapper.innerHTML = trending
-        .slice(5, 17)
-        .map((item) => createCardSlideHTML(item))
-        .join("");
+    // 2. Recent Releases
+    if (latestWrapper) {
+      try {
+        const recent = await getRecentReleases("movie", 1);
+        latestWrapper.innerHTML = recent
+          .slice(0, 12)
+          .map((item) => createCardSlideHTML(item))
+          .join("");
+      } catch {
+        if (trending.length > 5) {
+          latestWrapper.innerHTML = trending
+            .slice(5, 17)
+            .map((item) => createCardSlideHTML(item))
+            .join("");
+        }
+      }
     }
 
-    // 2. Popular Movies for Most Watched
+    // 3. Popular Movies for Most Watched
     if (mostWatchedWrapper) {
       const popularMovies = await getPopularMovies(1);
       mostWatchedWrapper.innerHTML = popularMovies
@@ -173,7 +187,7 @@ async function loadHomePage() {
         .join("");
     }
 
-    // 3. Top Rated Movies & Series
+    // 4. Top Rated Movies
     if (topRatedWrapper) {
       const topRated = await getTopRated("movie", 1);
       topRatedWrapper.innerHTML = topRated
@@ -213,6 +227,18 @@ function createHeroSlideHTML(item: TMDBItem): string {
         <div
           class="xs:gap-3 dark:text-foreground text-foreground-inverse flex max-w-[90vw] flex-col gap-[10px] sm:mb-8 sm:max-w-[80vw] sm:gap-5 md:max-w-[480px]"
         >
+          <div class="flex items-center gap-2">
+            <span class="rounded bg-primary/90 px-2 py-0.5 text-xs font-bold text-white uppercase tracking-wider">
+              ${type === "tv" ? "TV Series" : "Movie"}
+            </span>
+            ${
+              item.vote_average
+                ? `<span class="flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs font-bold text-yellow-400">
+                    ★ ${item.vote_average.toFixed(1)}
+                  </span>`
+                : ""
+            }
+          </div>
           <h2
             class="xs:text-3xl xs:leading-normal !w-full text-[28.75px] leading-snug font-extrabold sm:text-4xl sm:leading-[1.2] rtl:self-end rtl:text-right"
           >
@@ -265,13 +291,14 @@ function createCardSlideHTML(item: TMDBItem): string {
   const fullTitle = year ? `${title} (${year})` : title;
   const poster = getImageUrl(item.poster_path, "w500");
   const type = item.media_type || (item.first_air_date ? "tv" : "movie");
+  const rating = item.vote_average ? item.vote_average.toFixed(1) : null;
 
   return `
     <div
       class="swiper-slide xs:gap-[14px] mt-1 !flex max-w-[170px] flex-col gap-2 rounded-lg"
     >
       <a
-        class="group bg-foreground-muted relative h-[250px] w-[170px] overflow-hidden rounded-lg select-none"
+        class="group bg-foreground-muted relative h-[250px] w-[170px] overflow-hidden rounded-lg select-none block shadow-md"
         href="single.html?id=${item.id}&type=${type}"
       >
         <img
@@ -280,8 +307,18 @@ function createCardSlideHTML(item: TMDBItem): string {
           alt="${title}"
           height="250"
           width="170"
-          class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none"
+          class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:scale-105"
         />
+        ${
+          rating
+            ? `<div class="absolute top-2 right-2 flex items-center gap-1 rounded-md bg-black/75 px-1.5 py-0.5 text-[10px] font-bold text-yellow-400 backdrop-blur-sm shadow">
+                <span>★</span><span>${rating}</span>
+               </div>`
+            : ""
+        }
+        <div class="absolute top-2 left-2 rounded-md bg-black/70 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+          ${type === "tv" ? "Series" : "Movie"}
+        </div>
         <div
           class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
         >
@@ -314,102 +351,337 @@ function createCardSlideHTML(item: TMDBItem): string {
   `;
 }
 
-// ---------------- BROWSE PAGE LOGIC ----------------
+// ---------------- BROWSE PAGE LOGIC (GENRES & TOPICS) ----------------
 async function loadBrowsePage() {
   const grid = document.querySelector<HTMLElement>(".movies-grid");
   if (!grid) return;
 
   const urlParams = new URLSearchParams(window.location.search);
-  const query = urlParams.get("search");
-  const type = (urlParams.get("type") as "movie" | "tv") || "movie";
+  let activeQuery = urlParams.get("search") || "";
+  let activeFilter = urlParams.get("filter") || "all"; // all, most-watched, recent, top-rated, trending
+  let activeType = (urlParams.get("type") as "all" | "movie" | "tv") || "all";
+  let activeGenreId: number | null = urlParams.get("genre") ? parseInt(urlParams.get("genre")!, 10) : null;
+  let activeGenreName = urlParams.get("genreName") || "";
 
   const heading = document.querySelector<HTMLElement>("main h2");
+  const filterToolbarContainer = document.querySelector<HTMLElement>("#browse-filter-toolbar");
 
-  try {
-    let items: TMDBItem[] = [];
+  // Combined genres list
+  const combinedGenres: TMDBGenre[] = [
+    { id: 28, name: "Action" },
+    { id: 12, name: "Adventure" },
+    { id: 16, name: "Animation" },
+    { id: 35, name: "Comedy" },
+    { id: 80, name: "Crime" },
+    { id: 99, name: "Documentary" },
+    { id: 18, name: "Drama" },
+    { id: 10751, name: "Family" },
+    { id: 14, name: "Fantasy" },
+    { id: 27, name: "Horror" },
+    { id: 9648, name: "Mystery" },
+    { id: 10749, name: "Romance" },
+    { id: 878, name: "Sci-Fi" },
+    { id: 53, name: "Thriller" },
+    { id: 10752, name: "War" },
+    { id: 37, name: "Western" }
+  ];
 
-    if (query) {
-      if (heading) heading.textContent = `Search: "${query}"`;
-      items = await searchMulti(query);
+  function renderFilterToolbar() {
+    if (!filterToolbarContainer) return;
+
+    filterToolbarContainer.innerHTML = `
+      <div class="flex flex-col gap-4 w-full mb-6">
+        <!-- Topics & Category Pills -->
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2" id="topic-tabs-bar">
+            <button type="button" data-topic="all" class="topic-pill ${activeFilter === "all" && !activeQuery ? "active" : ""}">
+              🔥 All Titles
+            </button>
+            <button type="button" data-topic="most-watched" class="topic-pill ${activeFilter === "most-watched" ? "active" : ""}">
+              👀 Most Watched
+            </button>
+            <button type="button" data-topic="recent" class="topic-pill ${activeFilter === "recent" ? "active" : ""}">
+              ✨ Recent Releases
+            </button>
+            <button type="button" data-topic="top-rated" class="topic-pill ${activeFilter === "top-rated" ? "active" : ""}">
+              ⭐ Top Rated
+            </button>
+            <button type="button" data-topic="trending" class="topic-pill ${activeFilter === "trending" ? "active" : ""}">
+              ⚡ Trending Now
+            </button>
+          </div>
+
+          <!-- Type Toggle (All, Movies, TV) -->
+          <div class="flex items-center gap-1 rounded-full border border-white/10 bg-[#121216] p-1 text-xs">
+            <button type="button" data-type="all" class="px-3 py-1 rounded-full font-semibold transition-all ${activeType === "all" ? "bg-primary text-white" : "text-gray-400 hover:text-white"}">
+              All
+            </button>
+            <button type="button" data-type="movie" class="px-3 py-1 rounded-full font-semibold transition-all ${activeType === "movie" ? "bg-primary text-white" : "text-gray-400 hover:text-white"}">
+              Movies
+            </button>
+            <button type="button" data-type="tv" class="px-3 py-1 rounded-full font-semibold transition-all ${activeType === "tv" ? "bg-primary text-white" : "text-gray-400 hover:text-white"}">
+              TV Shows
+            </button>
+          </div>
+        </div>
+
+        <!-- Genres Scrollable Bar -->
+        <div class="flex items-center gap-2 overflow-x-auto py-1 no-scrollbar" id="genre-pills-bar">
+          <button type="button" data-genre="all" class="genre-pill ${activeGenreId === null ? "active" : ""}">
+            All Genres
+          </button>
+          ${combinedGenres
+            .map(
+              (g) => `
+            <button type="button" data-genre="${g.id}" data-name="${g.name}" class="genre-pill ${activeGenreId === g.id ? "active" : ""}">
+              ${g.name}
+            </button>
+          `
+            )
+            .join("")}
+        </div>
+      </div>
+    `;
+
+    // Add event listeners
+    filterToolbarContainer.querySelectorAll<HTMLButtonElement>("[data-topic]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeFilter = btn.dataset.topic || "all";
+        activeQuery = "";
+        activeGenreId = null;
+        updateUrlAndFetch();
+      });
+    });
+
+    filterToolbarContainer.querySelectorAll<HTMLButtonElement>("[data-type]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeType = (btn.dataset.type as "all" | "movie" | "tv") || "all";
+        updateUrlAndFetch();
+      });
+    });
+
+    filterToolbarContainer.querySelectorAll<HTMLButtonElement>("[data-genre]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const gVal = btn.dataset.genre;
+        if (gVal === "all") {
+          activeGenreId = null;
+          activeGenreName = "";
+        } else {
+          activeGenreId = parseInt(gVal || "0", 10);
+          activeGenreName = btn.dataset.name || "";
+        }
+        activeQuery = "";
+        updateUrlAndFetch();
+      });
+    });
+  }
+
+  function updateUrlAndFetch() {
+    renderFilterToolbar();
+
+    const params = new URLSearchParams();
+    if (activeQuery) params.set("search", activeQuery);
+    if (activeFilter && activeFilter !== "all") params.set("filter", activeFilter);
+    if (activeType && activeType !== "all") params.set("type", activeType);
+    if (activeGenreId) {
+      params.set("genre", String(activeGenreId));
+      if (activeGenreName) params.set("genreName", activeGenreName);
+    }
+
+    const newUrl = `browse.html${params.toString() ? "?" + params.toString() : ""}`;
+    window.history.replaceState(null, "", newUrl);
+
+    fetchBrowseItems();
+  }
+
+  async function fetchBrowseItems() {
+    grid!.innerHTML = `
+      <div class="col-span-full py-20 text-center flex flex-col items-center gap-3">
+        <div class="size-8 border-3 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-sm text-foreground-muted">Loading cinematic titles...</p>
+      </div>
+    `;
+
+    try {
+      let items: TMDBItem[] = [];
+
+      // 1. Search Query
+      if (activeQuery) {
+        if (heading) heading.textContent = `Search: "${activeQuery}"`;
+        items = await searchMulti(activeQuery);
+      }
+      // 2. Genre Filter
+      else if (activeGenreId) {
+        const gTitle = activeGenreName || "Genre";
+        if (heading) heading.textContent = `${gTitle} (${activeType === "tv" ? "Series" : activeType === "movie" ? "Movies" : "All"})`;
+
+        if (activeType === "tv") {
+          items = await getByGenre(activeGenreId, "tv");
+        } else if (activeType === "movie") {
+          items = await getByGenre(activeGenreId, "movie");
+        } else {
+          const [mList, tList] = await Promise.all([
+            getByGenre(activeGenreId, "movie"),
+            getByGenre(activeGenreId, "tv"),
+          ]);
+          items = interleave(mList, tList);
+        }
+      }
+      // 3. Topics (Most Watched, Recent, Top Rated, Trending, All)
+      else if (activeFilter === "most-watched") {
+        if (heading) heading.textContent = "Most Watched & Popular";
+        if (activeType === "tv") {
+          items = await getPopularTv(1);
+        } else if (activeType === "movie") {
+          items = await getPopularMovies(1);
+        } else {
+          const [m, t] = await Promise.all([getPopularMovies(1), getPopularTv(1)]);
+          items = interleave(m, t);
+        }
+      } else if (activeFilter === "recent") {
+        if (heading) heading.textContent = "Recent Releases";
+        if (activeType === "tv") {
+          items = await getRecentReleases("tv", 1);
+        } else if (activeType === "movie") {
+          items = await getRecentReleases("movie", 1);
+        } else {
+          const [m, t] = await Promise.all([getRecentReleases("movie", 1), getRecentReleases("tv", 1)]);
+          items = interleave(m, t);
+        }
+      } else if (activeFilter === "top-rated") {
+        if (heading) heading.textContent = "Top Rated & Award Winners";
+        if (activeType === "tv") {
+          items = await getTopRated("tv", 1);
+        } else if (activeType === "movie") {
+          items = await getTopRated("movie", 1);
+        } else {
+          const [m, t] = await Promise.all([getTopRated("movie", 1), getTopRated("tv", 1)]);
+          items = interleave(m, t);
+        }
+      } else if (activeFilter === "trending") {
+        if (heading) heading.textContent = "Trending This Week";
+        const media = activeType === "all" ? "all" : activeType;
+        items = await getTrending(media, "week");
+      } else {
+        // Default All
+        if (heading) {
+          heading.textContent =
+            activeType === "tv"
+              ? "Browse TV Series"
+              : activeType === "movie"
+              ? "Browse Movies"
+              : "Browse All Entertainment";
+        }
+        if (activeType === "tv") {
+          items = await getPopularTv(1);
+        } else if (activeType === "movie") {
+          items = await getPopularMovies(1);
+        } else {
+          const trending = await getTrending("all", "day");
+          items = trending;
+        }
+      }
+
       if (items.length === 0) {
-        grid.innerHTML = `
-          <div class="col-span-full py-16 text-center text-lg text-foreground-muted">
-            No results found for "${query}". Try another search term!
+        grid!.innerHTML = `
+          <div class="col-span-full py-16 text-center text-base text-gray-400">
+            No titles found matching your filter criteria. Try picking another topic or genre!
           </div>
         `;
         return;
       }
-    } else {
-      if (type === "tv") {
-        if (heading) heading.textContent = "Browse TV Shows";
-        items = await getPopularTv(1);
-      } else {
-        if (heading) heading.textContent = "Browse Movies";
-        items = await getPopularMovies(1);
-      }
-    }
 
-    grid.innerHTML = items
-      .map((item) => {
-        const title = getDisplayTitle(item);
-        const year = getReleaseYear(item);
-        const fullTitle = year ? `${title} (${year})` : title;
-        const poster = getImageUrl(item.poster_path, "w500");
-        const mediaType = item.media_type || type;
+      grid!.innerHTML = items
+        .map((item) => {
+          const title = getDisplayTitle(item);
+          const year = getReleaseYear(item);
+          const fullTitle = year ? `${title} (${year})` : title;
+          const poster = getImageUrl(item.poster_path, "w500");
+          const mediaType = item.media_type || (item.first_air_date ? "tv" : "movie");
+          const rating = item.vote_average ? item.vote_average.toFixed(1) : null;
 
-        return `
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              href="single.html?id=${item.id}&type=${mediaType}"
+          return `
+            <div
+              class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
             >
-              <img
-                loading="lazy"
-                src="${poster}"
-                alt="${title}"
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none"
-              />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
+              <a
+                class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none block shadow-md"
+                href="single.html?id=${item.id}&type=${mediaType}"
               >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
+                <img
+                  loading="lazy"
+                  src="${poster}"
+                  alt="${title}"
+                  height="250"
+                  width="170"
+                  class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:scale-105"
+                />
+                ${
+                  rating
+                    ? `<div class="absolute top-2 right-2 flex items-center gap-1 rounded-md bg-black/75 px-1.5 py-0.5 text-[10px] font-bold text-yellow-400 backdrop-blur-sm shadow">
+                        <span>★</span><span>${rating}</span>
+                       </div>`
+                    : ""
+                }
+                <div class="absolute top-2 left-2 rounded-md bg-black/70 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                  ${mediaType === "tv" ? "TV" : "Movie"}
                 </div>
-              </div>
-            </a>
-            <h4
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium capitalize sm:text-base line-clamp-1"
-              title="${title}"
-            >
-              ${fullTitle}
-            </h4>
-          </div>
-        `;
-      })
-      .join("");
+                <div
+                  class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
+                >
+                  <div
+                    class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
+                  >
+                    <svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+              <h4
+                class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium capitalize sm:text-base line-clamp-1"
+                title="${title}"
+              >
+                ${fullTitle}
+              </h4>
+            </div>
+          `;
+        })
+        .join("");
 
-    loadImages();
-  } catch (err) {
-    console.error("Error loading browse page:", err);
+      loadImages();
+    } catch (err) {
+      console.error("Error loading browse page:", err);
+      grid!.innerHTML = `
+        <div class="col-span-full py-16 text-center text-base text-red-400">
+          Failed to load titles from network. Please check your connection and refresh.
+        </div>
+      `;
+    }
   }
+
+  renderFilterToolbar();
+  fetchBrowseItems();
+}
+
+function interleave<T>(a: T[], b: T[]): T[] {
+  const result: T[] = [];
+  const max = Math.max(a.length, b.length);
+  for (let i = 0; i < max; i++) {
+    if (i < a.length) result.push(a[i]);
+    if (i < b.length) result.push(b[i]);
+  }
+  return result;
 }
 
 // ---------------- SINGLE MOVIE/TV DETAILS LOGIC ----------------
@@ -458,9 +730,12 @@ async function loadSinglePage() {
         genreContainer.innerHTML = item.genres
           .map(
             (g) => `
-            <span class="genre xs:text-[11.75px] cursor-pointer rounded-full px-[10px] py-[2.75px] text-[10.75px] hover:underline sm:px-3 sm:py-1 sm:text-[12px] md:text-[12.75px]">
+            <a
+              href="browse.html?genre=${g.id}&genreName=${encodeURIComponent(g.name)}&type=${type}"
+              class="genre xs:text-[11.75px] cursor-pointer rounded-full px-[10px] py-[2.75px] text-[10.75px] hover:underline sm:px-3 sm:py-1 sm:text-[12px] md:text-[12.75px]"
+            >
               ${g.name}
-            </span>
+            </a>
           `
           )
           .join("");
@@ -479,15 +754,82 @@ async function loadSinglePage() {
       watchNowBtn.href = `watch.html?id=${id}&type=${type}&s=1&e=1`;
     }
 
-    // Trailer embed
-    const videos = item.videos?.results || [];
-    const trailer =
-      videos.find((v) => v.site === "YouTube" && v.type === "Trailer") ||
-      videos.find((v) => v.site === "YouTube");
-
+    // Dynamic Trailer embed (no hardcoded Severance!)
+    const trailerKey = await fetchTrailerKey(item, type);
+    const trailerSection = document.querySelector<HTMLElement>("#trailer");
     const trailerIframe = document.querySelector<HTMLIFrameElement>("#trailer iframe");
-    if (trailerIframe && trailer) {
-      trailerIframe.src = `https://www.youtube.com/embed/${trailer.key}?autoplay=0`;
+    if (trailerIframe) {
+      if (trailerKey) {
+        trailerIframe.src = `https://www.youtube.com/embed/${trailerKey}?autoplay=0`;
+        if (trailerSection) trailerSection.style.display = "";
+      } else {
+        if (trailerSection) trailerSection.style.display = "none";
+      }
+    }
+
+    // Dynamic Recap & Tags (no hardcoded Severance/Baby Goats!)
+    const recapSection = document.querySelector<HTMLElement>("#recap-section") || document.querySelector<HTMLElement>("main section:nth-of-type(2)");
+    const recapHeading = recapSection?.querySelector<HTMLElement>("h2");
+    const recapParagraph = recapSection?.querySelector<HTMLElement>("p");
+    const recapTagsContainer = recapSection?.querySelector<HTMLElement>(".tags");
+
+    if (recapHeading) {
+      recapHeading.textContent = type === "tv" ? `${title} - Overview & Synopsis` : `${title} - Storyline & Synopsis`;
+    }
+
+    if (recapParagraph) {
+      recapParagraph.textContent =
+        item.overview ||
+        item.tagline ||
+        "No detailed synopsis available for this title.";
+    }
+
+    if (recapTagsContainer) {
+      const keywords = (
+        item.keywords?.results ||
+        item.keywords?.keywords ||
+        []
+      ).map((k) => k.name);
+      const genreNames = (item.genres || []).map((g) => g.name);
+      const allTags = Array.from(new Set([...genreNames, ...keywords])).slice(0, 14);
+
+      if (allTags.length > 0) {
+        recapTagsContainer.innerHTML = allTags
+          .map(
+            (tag) => `
+          <a
+            href="browse.html?search=${encodeURIComponent(tag)}"
+            class="genre-chip cursor-pointer rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-gray-300 hover:border-primary hover:text-white hover:bg-primary/20 transition-all duration-200"
+          >
+            #${tag}
+          </a>
+        `
+          )
+          .join("");
+      } else {
+        recapTagsContainer.innerHTML = "";
+      }
+    }
+
+    // Dynamic "You Might Also Like" recommendations
+    const youMightLikeContainer =
+      document.querySelector<HTMLElement>("#you-might-like-wrapper") ||
+      document.querySelector<HTMLElement>(".swiper:not(.hero-swiper) .swiper-wrapper");
+
+    const recommendations = (
+      item.recommendations?.results ||
+      item.similar?.results ||
+      []
+    ).filter((r) => r.poster_path);
+
+    if (youMightLikeContainer && recommendations.length > 0) {
+      youMightLikeContainer.innerHTML = recommendations
+        .slice(0, 15)
+        .map((rec) => createCardSlideHTML(rec))
+        .join("");
+
+      initSwipers();
+      loadImages();
     }
 
     // Series Seasons & Episodes Section on single.html
@@ -618,6 +960,7 @@ async function loadWatchPage() {
 
   let currentItem: TMDBItem | null = null;
   let currentEpisodesList: TMDBEpisode[] = [];
+  let totalSeasons: any[] = [];
 
   function updateHeading() {
     if (!titleHeading || !currentItem) return;
@@ -631,6 +974,17 @@ async function loadWatchPage() {
     } else {
       titleHeading.textContent = `Watch ${title}`;
     }
+  }
+
+  function updateNavButtonsState() {
+    if (!prevEpBtn || !nextEpBtn) return;
+    const maxEp = currentEpisodesList.length || 10;
+    const isFirst = currentSeason <= 1 && currentEpisode <= 1;
+    const isLast =
+      currentSeason >= totalSeasons.length && currentEpisode >= maxEp;
+
+    prevEpBtn.disabled = isFirst;
+    nextEpBtn.disabled = isLast;
   }
 
   function setPlayer() {
@@ -661,6 +1015,7 @@ async function loadWatchPage() {
       currentEpPill.textContent = `S${currentSeason} : E${currentEpisode}`;
     }
     updateHeading();
+    updateNavButtonsState();
   }
 
   try {
@@ -707,7 +1062,7 @@ async function loadWatchPage() {
       const validSeasons = (currentItem.seasons || []).filter(
         (s) => s.season_number > 0
       );
-      const totalSeasons =
+      totalSeasons =
         validSeasons.length > 0
           ? validSeasons
           : [
@@ -785,6 +1140,7 @@ async function loadWatchPage() {
           if (targetEp) {
             selectEpisode(targetEp, false);
           }
+          updateRecapSection(seasonData.overview);
         } catch (err) {
           console.error("Error fetching season episodes:", err);
           if (episodesContainer) {
@@ -905,6 +1261,97 @@ async function loadWatchPage() {
       if (seriesSection) seriesSection.classList.add("hidden");
       if (epNavControls) epNavControls.classList.add("hidden");
       setPlayer();
+      updateRecapSection();
+    }
+
+    // Dynamic Trailer resolver (NEVER hardcoded Severance!)
+    const trailerKey = await fetchTrailerKey(currentItem, type);
+    const trailerSection = document.querySelector<HTMLElement>("#trailer");
+    const trailerIframe = document.querySelector<HTMLIFrameElement>("#trailer iframe");
+    if (trailerIframe) {
+      if (trailerKey) {
+        trailerIframe.src = `https://www.youtube.com/embed/${trailerKey}?autoplay=0`;
+        if (trailerSection) trailerSection.style.display = "";
+      } else {
+        if (trailerSection) trailerSection.style.display = "none";
+      }
+    }
+
+    // Dynamic "You Might Also Like" recommendations
+    const youMightLikeContainer =
+      document.querySelector<HTMLElement>("#you-might-like-wrapper") ||
+      document.querySelector<HTMLElement>(".swiper:not(.hero-swiper) .swiper-wrapper");
+
+    const recommendations = (
+      currentItem.recommendations?.results ||
+      currentItem.similar?.results ||
+      []
+    ).filter((r) => r.poster_path);
+
+    if (youMightLikeContainer && recommendations.length > 0) {
+      youMightLikeContainer.innerHTML = recommendations
+        .slice(0, 15)
+        .map((rec) => createCardSlideHTML(rec))
+        .join("");
+
+      initSwipers();
+      loadImages();
+    }
+
+    function updateRecapSection(seasonOverview?: string) {
+      const recapSection =
+        document.querySelector<HTMLElement>("#recap-section") ||
+        document.querySelector<HTMLElement>("main section:nth-of-type(3)");
+      const recapHeading = recapSection?.querySelector<HTMLElement>("h2");
+      const recapParagraph = recapSection?.querySelector<HTMLElement>("p");
+      const recapTagsContainer = recapSection?.querySelector<HTMLElement>(".tags");
+
+      if (recapHeading) {
+        recapHeading.textContent =
+          type === "tv"
+            ? `${title} - Season ${currentSeason} Synopsis & Overview`
+            : `${title} - Storyline & Synopsis`;
+      }
+
+      if (recapParagraph) {
+        const epOverview =
+          type === "tv"
+            ? currentEpisodesList.find((e) => e.episode_number === currentEpisode)?.overview
+            : null;
+        recapParagraph.textContent =
+          epOverview ||
+          seasonOverview ||
+          currentItem?.overview ||
+          currentItem?.tagline ||
+          "No detailed synopsis available for this title.";
+      }
+
+      if (recapTagsContainer && currentItem) {
+        const keywords = (
+          currentItem.keywords?.results ||
+          currentItem.keywords?.keywords ||
+          []
+        ).map((k) => k.name);
+        const genreNames = (currentItem.genres || []).map((g) => g.name);
+        const allTags = Array.from(new Set([...genreNames, ...keywords])).slice(0, 14);
+
+        if (allTags.length > 0) {
+          recapTagsContainer.innerHTML = allTags
+            .map(
+              (tag) => `
+            <a
+              href="browse.html?search=${encodeURIComponent(tag)}"
+              class="genre-chip cursor-pointer rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-gray-300 hover:border-primary hover:text-white hover:bg-primary/20 transition-all duration-200"
+            >
+              #${tag}
+            </a>
+          `
+            )
+            .join("");
+        } else {
+          recapTagsContainer.innerHTML = "";
+        }
+      }
     }
   } catch (err) {
     console.warn("Watch page load error:", err);
