@@ -234,7 +234,8 @@ function createHeroSlideHTML(item: TMDBItem): string {
             ${
               item.vote_average
                 ? `<span class="flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-xs font-bold text-yellow-400">
-                    ★ ${item.vote_average.toFixed(1)}
+                    <svg class="size-3 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>${item.vote_average.toFixed(1)}</span>
                   </span>`
                 : ""
             }
@@ -312,7 +313,8 @@ function createCardSlideHTML(item: TMDBItem): string {
         ${
           rating
             ? `<div class="absolute top-2 right-2 flex items-center gap-1 rounded-md bg-black/75 px-1.5 py-0.5 text-[10px] font-bold text-yellow-400 backdrop-blur-sm shadow">
-                <span>★</span><span>${rating}</span>
+                <svg class="size-2.5 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span>${rating}</span>
                </div>`
             : ""
         }
@@ -395,19 +397,19 @@ async function loadBrowsePage() {
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div class="flex flex-wrap items-center gap-2" id="topic-tabs-bar">
             <button type="button" data-topic="all" class="topic-pill ${activeFilter === "all" && !activeQuery ? "active" : ""}">
-              🔥 All Titles
+              All Titles
             </button>
             <button type="button" data-topic="most-watched" class="topic-pill ${activeFilter === "most-watched" ? "active" : ""}">
-              👀 Most Watched
+              Most Watched
             </button>
             <button type="button" data-topic="recent" class="topic-pill ${activeFilter === "recent" ? "active" : ""}">
-              ✨ Recent Releases
+              Recent Releases
             </button>
             <button type="button" data-topic="top-rated" class="topic-pill ${activeFilter === "top-rated" ? "active" : ""}">
-              ⭐ Top Rated
+              Top Rated
             </button>
             <button type="button" data-topic="trending" class="topic-pill ${activeFilter === "trending" ? "active" : ""}">
-              ⚡ Trending Now
+              Trending Now
             </button>
           </div>
 
@@ -619,7 +621,8 @@ async function loadBrowsePage() {
                 ${
                   rating
                     ? `<div class="absolute top-2 right-2 flex items-center gap-1 rounded-md bg-black/75 px-1.5 py-0.5 text-[10px] font-bold text-yellow-400 backdrop-blur-sm shadow">
-                        <span>★</span><span>${rating}</span>
+                        <svg class="size-2.5 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <span>${rating}</span>
                        </div>`
                     : ""
                 }
