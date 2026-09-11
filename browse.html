@@ -12,8 +12,8 @@
         localStorage.setItem("APP_THEME", "dark");
       })();
     </script>
-    <script type="module" crossorigin src="./assets/main-BMRBUFtB.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/main-BeDenga-.css">
+    <script type="module" crossorigin src="./assets/main-BNR1S-DU.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/main-CLmiHPpD.css">
     <link rel="stylesheet" crossorigin href="./assets/font-en-XEDrDgG6.css">
   </head>
   <body class="bg-background selection:bg-primary/20 text-foreground font-sans">
@@ -342,6 +342,9 @@
           </button>
         </form>
 
+        <!-- Genre & Topic Filter Toolbar -->
+        <div id="browse-filter-toolbar" class="w-full"></div>
+
         <!-- Movies grid -->
         <div
           class="movies-grid xs:gap-4 grid grid-cols-2 justify-items-center gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
@@ -355,596 +358,8 @@
               href="/single.html"
               ><img
                 loading="lazy"
-                src="./images/1.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Severance
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/13.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Mission Impossible - The Final Reckoning
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/3.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              A Working Man
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/17.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              The Green Mile
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/5.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Game of Thrones
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/7.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              The Shawshank Redemption
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/6.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Parasite
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/2.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Snow White
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/8.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Arcane
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/9.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Interstellar
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/10.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Dark Knight
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/11.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Late Night
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/12.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Warfare
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
-                src="./images/14.webp"
-                alt=""
-                height="250"
-                width="170"
-                class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
-              <div
-                class="absolute top-0 left-0 flex h-full w-[170px] items-center justify-center rounded-lg bg-[rgba(0,0,0,0.6)] opacity-0 transition-all duration-300 group-hover:opacity-100"
-              >
-                <div
-                  class="xs:text-[48px] text-primary scale-[0.4] text-[42px] transition-all duration-300 group-hover:scale-100"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-                    ></path>
-                  </svg>
-                </div></div
-            ></a>
-            <h3
-              class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
-            >
-              Schindler's List
-            </h3>
-          </div>
-
-          <div
-            class="xs:gap-4 xs:max-w-[170px] mb-[10px] flex w-full max-w-[150px] flex-col items-center gap-2 rounded-lg sm:mb-4 md:mb-5 lg:mb-6"
-          >
-            <a
-              class="group bg-foreground-muted xs:w-[170px] xs:h-[250px] relative h-[220px] w-[150px] overflow-hidden rounded-lg select-none"
-              aria-label="learn more"
-              href="/single.html"
-              ><img
-                loading="lazy"
                 src="./images/15.webp"
-                alt=""
+                alt="Avatar: The Last Airbender"
                 height="250"
                 width="170"
                 class="lazy-fade scale-100 rounded-lg object-cover shadow-md drop-shadow-md transition-all duration-300 ease-in-out group-hover:shadow-none group-hover:drop-shadow-none" />
@@ -967,8 +382,9 @@
                       d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
                     ></path>
                   </svg>
-                </div></div
-            ></a>
+                </div>
+              </div>
+            </a>
             <h3
               class="xs:text-[14.75px] dark:text-foreground cursor-default text-center text-[14px] font-medium sm:text-base"
             >
@@ -989,95 +405,71 @@
       </section>
     </main>
 
-    <footer
-      class="xs:py-8 dark:bg-foreground lazy-bg w-full bg-cover bg-[position:center_center] py-[30px] sm:py-10 lg:py-16"
-      data-bg="/images/background.webp"
-      data-gradient="linear-gradient(rgba(0, 0, 0, 0.075), rgba(0, 0, 0, 0.075))"
-    >
-      <div
-        class="xs:gap-[30px] mx-auto flex max-w-[1140px] flex-col items-center gap-6 px-4 sm:gap-8 sm:px-6 md:gap-12 md:px-8 lg:gap-14 xl:px-0"
-      >
-        <a href="/" class="flex items-center gap-x-2 text-lg font-bold">
-          <svg
-            class="fill-primary h-[24px] w-[24px] sm:h-[28px] sm:w-[28px]"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-            ></path>
-          </svg>
-          <span
-            class="text-[16.75px] font-semibold tracking-wide text-white sm:text-[18px]"
-          >
-            LUPERTA
-          </span>
-        </a>
-        <ul
-          class="xs:gap-[6px] dark:text-foreground text-foreground-inverse grid grid-cols-2 items-center justify-start gap-1 font-medium capitalize sm:gap-2 md:gap-4 md:gap-x-16 md:gap-y-4"
-        >
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/"
-              >Home</a
-            >
-          </li>
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/browse.html"
-              >Most Watched</a
-            >
-          </li>
-
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/about.html"
-              >about us</a
-            >
-          </li>
-
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/browse.html"
-              >Recent releases</a
-            >
-          </li>
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/contact.html"
-              >Contact</a
-            >
-          </li>
-
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/browse.html"
-              >Top rated</a
-            >
-          </li>
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/privacy.html"
-              >Privacy policy</a
-            >
-          </li>
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/privacy.html"
-              >Terms and conditions
+    <!-- Visible Site Footer with all 8 core destinations -->
+    <footer class="site-footer mt-auto py-12 px-4 sm:px-6 md:px-8">
+      <div class="mx-auto max-w-[1140px] flex flex-col gap-10">
+        <!-- Main Footer Row -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <!-- Brand Column -->
+          <div class="md:col-span-1 flex flex-col gap-3">
+            <a href="index.html" class="flex items-center gap-x-2 text-lg font-bold text-white">
+              <svg class="fill-primary size-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"></path>
+              </svg>
+              <span class="text-xl font-extrabold tracking-wider text-white">LUPERTA</span>
             </a>
-          </li>
-        </ul>
+            <p class="text-xs text-gray-400 leading-relaxed max-w-xs">
+              Your premier gateway to stream top-rated movies, trending TV series, and timeless classics in high definition.
+            </p>
+          </div>
+
+          <!-- Quick Navigation -->
+          <div class="flex flex-col gap-2.5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-white">Navigation</h4>
+            <ul class="flex flex-col gap-2 text-sm">
+              <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
+              <li><a href="browse.html?filter=most-watched" class="hover:text-primary transition-colors">Most Watched</a></li>
+              <li><a href="browse.html?filter=recent" class="hover:text-primary transition-colors">Recent Releases</a></li>
+              <li><a href="browse.html?filter=top-rated" class="hover:text-primary transition-colors">Top Rated</a></li>
+            </ul>
+          </div>
+
+          <!-- Explore Categories -->
+          <div class="flex flex-col gap-2.5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-white">Explore</h4>
+            <ul class="flex flex-col gap-2 text-sm">
+              <li><a href="browse.html?type=movie" class="hover:text-primary transition-colors">Movies</a></li>
+              <li><a href="browse.html?type=tv" class="hover:text-primary transition-colors">TV Shows</a></li>
+              <li><a href="browse.html?filter=trending" class="hover:text-primary transition-colors">Trending Now</a></li>
+              <li><a href="browse.html" class="hover:text-primary transition-colors">All Genres & Topics</a></li>
+            </ul>
+          </div>
+
+          <!-- Legal & Support -->
+          <div class="flex flex-col gap-2.5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-white">Company & Legal</h4>
+            <ul class="flex flex-col gap-2 text-sm">
+              <li><a href="about.html" class="hover:text-primary transition-colors">About Us</a></li>
+              <li><a href="contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+              <li><a href="privacy.html#privacy" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+              <li><a href="privacy.html#terms" class="hover:text-primary transition-colors">Terms & Conditions</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Divider & Bottom Bar -->
+        <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+          <p>© 2026 LUPERTA. All rights reserved.</p>
+          <div class="flex items-center gap-6">
+            <a href="privacy.html#privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+            <span>•</span>
+            <a href="privacy.html#terms" class="hover:text-white transition-colors">Terms and Conditions</a>
+            <span>•</span>
+            <a href="contact.html" class="hover:text-white transition-colors">DMCA Notice</a>
+          </div>
+        </div>
       </div>
     </footer>
-
+
   </body>
 </html>

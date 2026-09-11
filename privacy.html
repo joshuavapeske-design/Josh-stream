@@ -54,8 +54,8 @@
         localStorage.setItem("APP_THEME", "dark");
       })();
     </script>
-    <script type="module" crossorigin src="./assets/main-BMRBUFtB.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/main-BeDenga-.css">
+    <script type="module" crossorigin src="./assets/main-BNR1S-DU.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/main-CLmiHPpD.css">
     <link rel="stylesheet" crossorigin href="./assets/font-en-XEDrDgG6.css">
   </head>
   <body class="bg-background selection:bg-primary/20 text-foreground font-sans">
@@ -332,175 +332,403 @@
         </div>
       </div>
     </header>
+    <main class="min-h-screen pb-16 pt-24">
+      <!-- Legal Header -->
+      <section class="relative overflow-hidden border-b border-white/10 bg-gradient-to-b from-[#0e0e14] to-[#08080c] py-14 px-4 sm:px-6 md:px-8">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none"></div>
+        <div class="mx-auto max-w-[940px] text-center relative z-10 flex flex-col items-center gap-4">
+          <div class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1 text-xs font-semibold text-primary">
+            <span class="inline-block size-2 rounded-full bg-primary animate-pulse"></span>
+            Legal & Compliance Hub
+          </div>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
+            Privacy Policy & Terms
+          </h1>
+          <p class="max-w-2xl text-sm sm:text-base text-gray-300 leading-relaxed">
+            Transparent, straightforward guidelines on how LUPERTA handles your data, ensures safe browsing, and maintains our indexer platform.
+          </p>
 
-    <main class="pb-8 lg:pb-14 rtl:text-right">
-      <!-- Title -->
-      <div
-        class="lazy-bg dark:bg-background bg-foreground/90 relative min-h-[96px] bg-cover bg-[position:center_center] sm:min-h-[114px] md:min-h-[132px] lg:min-h-[140px]"
-        data-bg="/images/background.webp"
-        data-gradient="linear-gradient(
-              to right,
-              rgba(0, 0, 0, 0.075),
-              rgba(0, 0, 0, 0.075)
-            )"
-      >
-        <h2
-          class="xs:top-[60%] absolute top-[57.75%] left-1/2 w-full -translate-x-1/2 text-center text-base font-semibold text-white capitalize sm:top-[65%] sm:text-xl md:top-[70%] md:text-2xl"
-        >
-          Privacy policy
-        </h2>
-      </div>
-
-      <section class="mx-auto max-w-[940px] px-4 sm:px-6 md:px-8 xl:px-0">
-        <div class="mt-8 grid gap-8 md:mt-12 md:gap-12 lg:mt-16">
-          <div>
-            <h3 class="mb-4 text-xl font-semibold md:text-2xl">
-              1. Information We Collect
-            </h3>
-            <p class="text-foreground text-sm leading-relaxed md:text-base">
-              We collect information you provide directly to us, including name,
-              email, and viewing preferences. We also automatically collect
-              usage data and device information when you use our service.
-            </p>
+          <div class="flex flex-wrap items-center justify-center gap-4 pt-2 text-xs text-gray-400">
+            <span class="flex items-center gap-1.5"><strong class="text-white">Effective:</strong> January 1, 2026</span>
+            <span>•</span>
+            <span class="flex items-center gap-1.5"><strong class="text-white">Version:</strong> 3.2.0</span>
+            <span>•</span>
+            <span class="flex items-center gap-1.5"><strong class="text-white">Compliance:</strong> GDPR / CCPA / DMCA</span>
           </div>
 
-          <div>
-            <h3 class="mb-4 text-xl font-semibold md:text-2xl">
-              2. How We Use Your Information
-            </h3>
-            <p class="text-foreground text-sm leading-relaxed md:text-base">
-              Your information helps us provide, improve and personalize our
-              services, send you updates and recommendations, and ensure
-              platform security.
-            </p>
-          </div>
-
-          <div>
-            <h3 class="mb-4 text-xl font-semibold md:text-2xl">
-              3. Information Sharing
-            </h3>
-            <p class="text-foreground text-sm leading-relaxed md:text-base">
-              We don't sell your personal information. We may share data with
-              service providers who assist our operations, always under strict
-              confidentiality agreements.
-            </p>
-          </div>
-
-          <div>
-            <h3 class="mb-4 text-xl font-semibold md:text-2xl">
-              4. Data Security
-            </h3>
-            <p class="text-foreground text-sm leading-relaxed md:text-base">
-              We implement appropriate technical and organizational measures to
-              protect your personal information against unauthorized access or
-              disclosure.
-            </p>
-          </div>
-
-          <div>
-            <h3 class="mb-4 text-xl font-semibold md:text-2xl">
-              5. Your Rights
-            </h3>
-            <p class="text-foreground text-sm leading-relaxed md:text-base">
-              You can access, update, or remove your personal data at any time.
-              Please
-              <a href="/contact.html" class="text-primary hover:underline"
-                >contact us</a
-              >
-              to manage your information.
-            </p>
+          <!-- Interactive Tab Switcher -->
+          <div class="mt-6 flex items-center p-1.5 rounded-2xl bg-[#14141d] border border-white/10 shadow-xl max-w-md w-full">
+            <button
+              id="tab-btn-privacy"
+              type="button"
+              class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 bg-primary text-white shadow-md cursor-pointer"
+              onclick="switchLegalTab('privacy')"
+            >
+              Privacy Policy
+            </button>
+            <button
+              id="tab-btn-terms"
+              type="button"
+              class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-gray-400 hover:text-white cursor-pointer"
+              onclick="switchLegalTab('terms')"
+            >
+              Terms & Conditions
+            </button>
           </div>
         </div>
       </section>
+
+      <!-- Legal Content Wrapper -->
+      <section class="mx-auto max-w-[940px] px-4 sm:px-6 md:px-8 mt-10">
+        
+        <!-- PRIVACY POLICY SECTION -->
+        <div id="content-privacy" class="space-y-10">
+          <!-- Summary Card -->
+          <div class="rounded-2xl border border-primary/20 bg-primary/5 p-6 sm:p-8">
+            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+              <span>🛡️</span> Privacy at a Glance
+            </h3>
+            <p class="text-sm text-gray-300 leading-relaxed">
+              LUPERTA is built with a <strong>privacy-first mindset</strong>. We do not require account creation, do not ask for credit card numbers, and do not track your personal identity across the web. Your favorites, watch history, and theme settings are saved locally inside your own browser via HTML5 localStorage.
+            </p>
+          </div>
+
+          <!-- Section 1 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">01.</span> Information We Collect
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                Unlike traditional streaming platforms, LUPERTA requires <strong>no mandatory account registration</strong>. We collect data solely to maintain platform stability and deliver streaming media embeds:
+              </p>
+              <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2">
+                <li><strong class="text-white">Technical Telemetry:</strong> Anonymized server logs including browser user agent, preferred language, access timestamps, and requested movie/show IDs to balance CDN workloads.</li>
+                <li><strong class="text-white">Local Device Preferences:</strong> Your theme toggle (dark/light), episode progress bookmarks, and custom watchlist entries are stored strictly inside your browser's <code class="bg-white/10 px-1.5 py-0.5 rounded text-primary">localStorage</code>. This data never touches our backend servers.</li>
+                <li><strong class="text-white">Support Communications:</strong> If you voluntarily reach out via our <a href="contact.html" class="text-primary hover:underline">Contact page</a>, we collect your submitted email address and message contents solely to resolve your technical query.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Section 2 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">02.</span> Cookies and Tracking Technologies
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                We minimize tracking to the absolute lowest technical necessity:
+              </p>
+              <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2">
+                <li>We do <strong>not</strong> use third-party behavioral advertising cookies or commercial ad trackers.</li>
+                <li>Temporary session identifiers may be used strictly for DDoS mitigation (e.g. Cloudflare or hosting reverse proxies).</li>
+                <li>Embedded third-party video players (e.g., streaming mirrors and YouTube trailer embeds) may load their own cookies according to their respective privacy disclosures. We recommend using privacy-focused browser configurations if you wish to block third-party cookies.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Section 3 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">03.</span> Third-Party Service Providers & APIs
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                LUPERTA interacts with reputable third-party services to render media information and streaming streams:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div class="p-4 rounded-xl border border-white/5 bg-[#14141d]">
+                  <h4 class="font-bold text-white text-sm mb-1">The Movie Database (TMDB)</h4>
+                  <p class="text-xs text-gray-400">Provides movie metadata, posters, casts, and synopses. Queries are handled directly via client-side API requests adhering to TMDB API guidelines.</p>
+                </div>
+                <div class="p-4 rounded-xl border border-white/5 bg-[#14141d]">
+                  <h4 class="font-bold text-white text-sm mb-1">YouTube Embeds</h4>
+                  <p class="text-xs text-gray-400">Official trailers are loaded via YouTube's privacy-enhanced embed domain (<code class="text-primary text-[11px]">youtube-nocookie.com</code>) where supported.</p>
+                </div>
+                <div class="p-4 rounded-xl border border-white/5 bg-[#14141d]">
+                  <h4 class="font-bold text-white text-sm mb-1">Multi-Host Streaming Mirrors</h4>
+                  <p class="text-xs text-gray-400">Third-party player embeds operate independently. When you click play, you communicate directly with the respective mirror server.</p>
+                </div>
+                <div class="p-4 rounded-xl border border-white/5 bg-[#14141d]">
+                  <h4 class="font-bold text-white text-sm mb-1">Content Delivery Networks</h4>
+                  <p class="text-xs text-gray-400">Assets and static bundles are distributed globally via high-speed CDNs to minimize latency and ensure 99.9% uptime.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">04.</span> GDPR & CCPA Compliance (Your Rights)
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                Whether you reside in the European Economic Area (EEA), United Kingdom, or California, you are entitled to comprehensive data privacy rights under GDPR and the California Consumer Privacy Act (CCPA):
+              </p>
+              <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2">
+                <li><strong class="text-white">Right to Access & Portability:</strong> You may request disclosure of any personal data we hold associated with your IP address or support communications.</li>
+                <li><strong class="text-white">Right to Erasure (Right to Be Forgotten):</strong> You can wipe all local preferences instantly by clearing your browser cache and localStorage. For server log records or support tickets, email our privacy team.</li>
+                <li><strong class="text-white">Right to Non-Discrimination:</strong> We do not sell personal information, and we never restrict streaming features based on privacy choices.</li>
+                <li><strong class="text-white">Do Not Track (DNT) Signals:</strong> LUPERTA honors universal opt-out preference signals and DNT headers.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Section 5 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">05.</span> Children's Online Privacy (COPPA)
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                LUPERTA is designed for a general audience and does not knowingly solicit or collect personal information from children under 13 years of age (or under 16 in the European Union). If we learn that a minor has provided us with personal information through support channels, we immediately purge such records from our systems.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 6 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">06.</span> Data Security & Inquiries
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                All network communication with LUPERTA is secured through modern TLS 1.3 encryption. For any questions regarding this Privacy Policy or your personal rights, please reach out via our dedicated form at <a href="contact.html" class="text-primary hover:underline font-semibold">Contact Us</a> or email <code class="text-primary bg-white/10 px-2 py-0.5 rounded">privacy@luperta.stream</code>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TERMS AND CONDITIONS SECTION -->
+        <div id="content-terms" class="hidden space-y-10">
+          <!-- Summary Card -->
+          <div class="rounded-2xl border border-primary/20 bg-primary/5 p-6 sm:p-8">
+            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+              <span>⚖️</span> Terms of Use Overview
+            </h3>
+            <p class="text-sm text-gray-300 leading-relaxed">
+              By accessing, browsing, or using LUPERTA, you agree to comply with and be bound by these Terms and Conditions. Please review them carefully. If you disagree with any portion, you must discontinue use of the platform immediately.
+            </p>
+          </div>
+
+          <!-- Section 1 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">01.</span> Nature of Service & Non-Hosting Disclaimer
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                <strong>LUPERTA is an informational indexing and discovery interface.</strong> We organize and present publicly available cinema metadata utilizing the TMDB API and provide convenient player frames linking to third-party streaming sources.
+              </p>
+              <div class="p-4 rounded-xl border border-yellow-500/20 bg-yellow-500/5 text-yellow-200 text-xs leading-relaxed">
+                <strong>Important Notice:</strong> LUPERTA does not host, upload, store, or encode any video media, audio streams, or multimedia files on our own web servers. All media playback is handled by independent third-party video hosts over which LUPERTA exercises no direct operational control.
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">02.</span> Intellectual Property & Copyright Ownership
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                All motion picture titles, television show names, character images, posters, backdrops, and promotional artwork displayed on LUPERTA are the intellectual property of their respective copyright holders, production studios, and distributors.
+              </p>
+              <p>
+                The proprietary LUPERTA software interface, design layout, brand identity, custom CSS, scripts, and search orchestration algorithms are protected by copyright and intellectual property legislation.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 3 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">03.</span> DMCA & Copyright Infringement Takedown Notice
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                LUPERTA complies with the Digital Millennium Copyright Act (17 U.S.C. § 512). As an indexer, we respond promptly to valid takedown notices. To submit a complaint, please include:
+              </p>
+              <ol class="list-decimal list-inside space-y-2 text-gray-400 pl-2">
+                <li>Physical or electronic signature of the authorized copyright owner or agent.</li>
+                <li>Identification of the copyrighted work claimed to have been infringed.</li>
+                <li>Specific URL(s) on LUPERTA that point to the indexed title.</li>
+                <li>Your contact information (name, address, telephone number, email).</li>
+                <li>A good-faith statement that the disputed use is not authorized by the copyright owner, agent, or the law.</li>
+                <li>A statement made under penalty of perjury that the notification is accurate and that you are authorized to act.</li>
+              </ol>
+              <p class="pt-2">
+                Send DMCA requests via our <a href="contact.html" class="text-primary hover:underline">DMCA Form</a> or directly to <code class="text-primary bg-white/10 px-2 py-0.5 rounded">dmca@luperta.stream</code>. Valid requests are addressed within 24 to 48 business hours.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">04.</span> Acceptable Use Policy
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>When using LUPERTA, you agree NOT to:</p>
+              <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2">
+                <li>Deploy automated bots, spiders, crawlers, or scrapers without express written permission.</li>
+                <li>Execute denial-of-service (DDoS) attacks or deliberately overload streaming node balances.</li>
+                <li>Bypass, disable, or tamper with security protocols or server protection measures.</li>
+                <li>Transmit malicious code, viruses, trojans, or exploit payloads through the platform.</li>
+                <li>Misrepresent your identity or falsely file fraudulent DMCA takedown requests.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Section 5 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">05.</span> Disclaimer of Warranties & Limitation of Liability
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                LUPERTA is provided strictly on an <strong>"AS-IS" and "AS-AVAILABLE" basis</strong> without representations or warranties of any kind, whether express, statutory, or implied. We do not guarantee uninterrupted, error-free, or 100% continuous streaming uptime.
+              </p>
+              <p>
+                To the fullest extent permitted by applicable law, LUPERTA, its contributors, operators, and affiliates shall not be liable for any direct, indirect, incidental, punitive, or consequential damages resulting from your use of, or inability to access, the service or third-party embed links.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 6 -->
+          <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 sm:p-8 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
+              <span class="text-primary font-mono text-lg">06.</span> Modifications and Governing Law
+            </h2>
+            <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+              <p>
+                We reserve the right to revise or replace these Terms and Conditions at any time. Continued use of LUPERTA following any published updates constitutes full acceptance of the modified terms.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </section>
     </main>
 
-    <footer
-      class="xs:py-8 dark:bg-foreground lazy-bg w-full bg-cover bg-[position:center_center] py-[30px] sm:py-10 lg:py-16"
-      data-bg="/images/background.webp"
-      data-gradient="linear-gradient(rgba(0, 0, 0, 0.075), rgba(0, 0, 0, 0.075))"
-    >
-      <div
-        class="xs:gap-[30px] mx-auto flex max-w-[1140px] flex-col items-center gap-6 px-4 sm:gap-8 sm:px-6 md:gap-12 md:px-8 lg:gap-14 xl:px-0"
-      >
-        <a href="/" class="flex items-center gap-x-2 text-lg font-bold">
-          <svg
-            class="fill-primary h-[24px] w-[24px] sm:h-[28px] sm:w-[28px]"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"
-            ></path>
-          </svg>
-          <span
-            class="text-[16.75px] font-semibold tracking-wide text-white sm:text-[18px]"
-          >
-            LUPERTA
-          </span>
-        </a>
-        <ul
-          class="xs:gap-[6px] dark:text-foreground text-foreground-inverse grid grid-cols-2 items-center justify-start gap-1 font-medium capitalize sm:gap-2 md:gap-4 md:gap-x-16 md:gap-y-4"
-        >
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/"
-              >Home</a
-            >
-          </li>
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/browse.html"
-              >Most Watched</a
-            >
-          </li>
+    <!-- Interactive Tab Script -->
+    <script>
+      function switchLegalTab(tab) {
+        const privacyTab = document.getElementById('content-privacy');
+        const termsTab = document.getElementById('content-terms');
+        const btnPrivacy = document.getElementById('tab-btn-privacy');
+        const btnTerms = document.getElementById('tab-btn-terms');
 
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/about.html"
-              >about us</a
-            >
-          </li>
+        if (!privacyTab || !termsTab || !btnPrivacy || !btnTerms) return;
 
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/browse.html"
-              >Recent releases</a
-            >
-          </li>
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/contact.html"
-              >Contact</a
-            >
-          </li>
+        if (tab === 'terms') {
+          privacyTab.classList.add('hidden');
+          termsTab.classList.remove('hidden');
 
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/browse.html"
-              >Top rated</a
-            >
-          </li>
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/privacy.html"
-              >Privacy policy</a
-            >
-          </li>
-          <li class="text-center">
-            <a
-              class="hover:text-primary text-sm transition-all duration-300 hover:underline sm:text-base"
-              href="/privacy.html"
-              >Terms and conditions
+          btnPrivacy.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-gray-400 hover:text-white cursor-pointer';
+          btnTerms.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 bg-primary text-white shadow-md cursor-pointer';
+          
+          if (history.replaceState) {
+            history.replaceState(null, '', '#terms');
+          }
+        } else {
+          termsTab.classList.add('hidden');
+          privacyTab.classList.remove('hidden');
+
+          btnPrivacy.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 bg-primary text-white shadow-md cursor-pointer';
+          btnTerms.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-gray-400 hover:text-white cursor-pointer';
+          
+          if (history.replaceState) {
+            history.replaceState(null, '', '#privacy');
+          }
+        }
+      }
+
+      // Handle direct hash navigation e.g. privacy.html#terms or privacy.html#privacy
+      window.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.toLowerCase();
+        if (hash === '#terms' || hash.includes('term')) {
+          switchLegalTab('terms');
+        } else {
+          switchLegalTab('privacy');
+        }
+      });
+
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.toLowerCase();
+        if (hash === '#terms' || hash.includes('term')) {
+          switchLegalTab('terms');
+        } else {
+          switchLegalTab('privacy');
+        }
+      });
+    </script>
+
+    <!-- Visible Site Footer with all 8 core destinations -->
+    <footer class="site-footer mt-auto py-12 px-4 sm:px-6 md:px-8">
+      <div class="mx-auto max-w-[1140px] flex flex-col gap-10">
+        <!-- Main Footer Row -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <!-- Brand Column -->
+          <div class="md:col-span-1 flex flex-col gap-3">
+            <a href="index.html" class="flex items-center gap-x-2 text-lg font-bold text-white">
+              <svg class="fill-primary size-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 15.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4Zm11.96-4.45c.58 6.26-4.64 11.48-10.9 10.9 -4.43-.41-8.12-3.85-8.9-8.23 -.26-1.42-.19-2.78.12-4.04 .14-.58.76-.9 1.31-.7v0c.47.17.75.67.63 1.16 -.2.82-.27 1.7-.19 2.61 .37 4.04 3.89 7.25 7.95 7.26 4.79.01 8.61-4.21 7.94-9.12 -.51-3.7-3.66-6.62-7.39-6.86 -.83-.06-1.63.02-2.38.2 -.49.11-.99-.16-1.16-.64v0c-.2-.56.12-1.17.69-1.31 1.79-.43 3.75-.41 5.78.37 3.56 1.35 6.15 4.62 6.5 8.4ZM5.5 4C4.67 4 4 4.67 4 5.5 4 6.33 4.67 7 5.5 7 6.33 7 7 6.33 7 5.5 7 4.67 6.33 4 5.5 4Z"></path>
+              </svg>
+              <span class="text-xl font-extrabold tracking-wider text-white">LUPERTA</span>
             </a>
-          </li>
-        </ul>
+            <p class="text-xs text-gray-400 leading-relaxed max-w-xs">
+              Your premier gateway to stream top-rated movies, trending TV series, and timeless classics in high definition.
+            </p>
+          </div>
+
+          <!-- Quick Navigation -->
+          <div class="flex flex-col gap-2.5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-white">Navigation</h4>
+            <ul class="flex flex-col gap-2 text-sm">
+              <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
+              <li><a href="browse.html?filter=most-watched" class="hover:text-primary transition-colors">Most Watched</a></li>
+              <li><a href="browse.html?filter=recent" class="hover:text-primary transition-colors">Recent Releases</a></li>
+              <li><a href="browse.html?filter=top-rated" class="hover:text-primary transition-colors">Top Rated</a></li>
+            </ul>
+          </div>
+
+          <!-- Explore Categories -->
+          <div class="flex flex-col gap-2.5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-white">Explore</h4>
+            <ul class="flex flex-col gap-2 text-sm">
+              <li><a href="browse.html?type=movie" class="hover:text-primary transition-colors">Movies</a></li>
+              <li><a href="browse.html?type=tv" class="hover:text-primary transition-colors">TV Shows</a></li>
+              <li><a href="browse.html?filter=trending" class="hover:text-primary transition-colors">Trending Now</a></li>
+              <li><a href="browse.html" class="hover:text-primary transition-colors">All Genres & Topics</a></li>
+            </ul>
+          </div>
+
+          <!-- Legal & Support -->
+          <div class="flex flex-col gap-2.5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-white">Company & Legal</h4>
+            <ul class="flex flex-col gap-2 text-sm">
+              <li><a href="about.html" class="hover:text-primary transition-colors">About Us</a></li>
+              <li><a href="contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+              <li><a href="privacy.html#privacy" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+              <li><a href="privacy.html#terms" class="hover:text-primary transition-colors">Terms & Conditions</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Divider & Bottom Bar -->
+        <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+          <p>© 2026 LUPERTA. All rights reserved.</p>
+          <div class="flex items-center gap-6">
+            <a href="privacy.html#privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+            <span>•</span>
+            <a href="privacy.html#terms" class="hover:text-white transition-colors">Terms and Conditions</a>
+            <span>•</span>
+            <a href="contact.html" class="hover:text-white transition-colors">DMCA Notice</a>
+          </div>
+        </div>
       </div>
     </footer>
 
